@@ -1,0 +1,127 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filter Website</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400&family=Russo+One&display=swap" rel="stylesheet">
+    <style>
+        canvas {
+            max-width: 500px;
+            max-height: 250px;
+            outline: black 3px solid;
+            position: relative;
+        }
+        p { 
+        font-family: 'Montserrat', sans-serif;
+        font-size: 20px; 
+        font-variant: normal; 
+        font-weight: 700; 
+        line-height: 14px; 
+        text-align: center;
+        color: rgb(53, 56, 59);
+        }
+        body {
+        background-color: #d3d3d3;
+        }
+        .h1Text {
+            color: rgb(53, 56, 59);
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-family: 'Russo One', sans-serif;
+        }
+        .Directions {
+            color: rgb(53, 56, 59);
+            text-align: center;
+            font-family: 'Russo One', sans-serif;
+        }
+        
+
+    </style>
+    <script src="https://www.dukelearntoprogram.com/course1/common/js/image/SimpleImage.js">
+    </script>
+    <script>
+        //Global Variable
+        var image;
+
+        function upload() {
+            var imgcanvas = document.getElementById("canvas1");
+            var fileinput = document.getElementById("finput");
+            image = new SimpleImage(fileinput);
+            
+            image.drawTo(imgcanvas);
+        }
+        function makeGray() {
+            for (var pixel of image.values()) {
+            var avg = (pixel.getRed() + pixel.getGreen() + pixel.getBlue())/3;
+            pixel.setRed(avg);
+            pixel.setGreen(avg);
+            pixel.setBlue(avg);
+        }
+        var imgcanvas = document.getElementById("canvas1");
+        image.drawTo(imgcanvas);
+        }
+        function resetImage() {
+            var imgcanvas = document.getElementById("canvas1");
+            var ctx = imgcanvas.getContext("2d");
+            ctx.clearRect(0,0,5000,2500);
+        }
+        function makeRed() {
+            for (var pixel of image.values()) {
+                pixel.setRed(255);
+            }
+        var imgcanvas = document.getElementById("canvas1");
+        image.drawTo(imgcanvas);
+        }
+        function threeStripe() {
+            var w = image.getWidth();
+            for (var pixel of image.values()) {
+                var x  =  pixel.getX();
+                if (x < w/3) {
+                    pixel.setGreen(255);
+                }
+                else if (x < 2*w/3) {
+                    pixel.setRed(255);
+                }
+                else {
+                    pixel.setBlue(255);
+                }
+            }
+            var imgcanvas = document.getElementById("canvas1");
+            image.drawTo(imgcanvas);
+        }
+    </script>
+</head>
+<body>
+    <h1 class="h1Text">Filter fun!</h1>
+    <h3 class="Directions">Directions:</h3>
+    <p>Upload an image, then click any of the buttons to filter the image!</p>
+    <div style="text-align: center;">   
+        <canvas id="canvas1"> 
+        </canvas>
+    </div>   
+    
+    <p>
+        <input type="file" multiple="false"
+        accept="image/*" id="finput"
+        onchange="upload()">
+    </p>
+    <p>
+        <input type="button" value="Make Grayscale"
+        onclick="makeGray()">
+    </p>
+    <p>
+        <input type="button" value="Make Red"
+        onclick="makeRed()">
+    </p>
+    <p>
+        <input type="button" value="Make 3 Parts Red, Green, Blue"
+        onclick="threeStripe()">
+    </p>
+    <p>
+        <input type = "button" value = "Clear Canvas"
+        onclick = "resetImage()">
+    </p>
+    <p>CLICK CLEAR CANVAS SO THAT YOU CAN UPLOAD ANOTHER IMAGE</p>
+</body>
+</html>
